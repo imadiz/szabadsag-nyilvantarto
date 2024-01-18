@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Runtime.Intrinsics.X86;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,9 +16,14 @@ public partial class MainViewModel : ObservableObject
     private ModelClass _model = new();
 
     public ReactiveCommand<Unit, Unit> Backtonow { get; }//Ma gomb
+    public ReactiveCommand<string, Unit> AddLeaveType { get; }//Szabadság hozzáadás
     public MainViewModel()
     {
         Backtonow = ReactiveCommand.Create(() => { Model.Currentyear = DateTimeOffset.Now; });//Visszaugrás idénre
+        AddLeaveType = ReactiveCommand.Create<string>((string leavename/*<-CommandParameter*/) =>
+        {
+            Model.Leavetypes.Add(new Classes.LeaveType(leavename, $"_{leavename}"));//Távolléttípus hozzáadása
+        });
     }
 }
 //ThereforeCustomAPI ws19-06 mappástól másold ki!

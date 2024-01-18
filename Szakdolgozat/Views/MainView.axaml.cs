@@ -12,6 +12,6 @@ public partial class MainView : UserControl
     public MainView()
     {
         InitializeComponent();
-        dp_currentyear.Bind(DatePicker.SelectedDateProperty, new Binding("Model.Currentyear", BindingMode.Default));
+        dp_currentyear.Bind(DatePicker.SelectedDateProperty, new Binding("Model.Currentyear", BindingMode.Default));//Ez azért kell mert XAML-ben nincsen a Binding-ban StringConversion.
     }
 }
