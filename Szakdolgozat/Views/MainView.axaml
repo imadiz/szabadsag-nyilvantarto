@@ -1,131 +1,144 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sys="clr-namespace:System"
-             xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Szakdolgozat.Views.MainView"
-             x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
-  <UserControl.Styles>
-    <Style Selector="Grid#MainGrid">
-    </Style>
-  </UserControl.Styles>
-  <UserControl.Resources>
-  </UserControl.Resources>
-  <Grid x:Name="MainGrid">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="40"/>
-      <RowDefinition/>
-    </Grid.RowDefinitions>
-    <Border BorderThickness="0 0 0 1"
+<UserControl
+    x:Class="Szakdolgozat.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System"
+    xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d">
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <UserControl.Styles>
+        <Style Selector="Grid#MainGrid" />
+    </UserControl.Styles>
+    <UserControl.Resources />
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
             BorderBrush="Black"
-            Grid.Row="0">
-      <StackPanel Orientation="Horizontal">
-        <Label Content="-Schrack Logo-"
-               VerticalAlignment="Center"
-               Margin="0 0 20 0"/>
-        <Button Content="Ma"
-                Margin="0 0 20 0"
-                Command="{Binding Backtonow}"/>
-        <DatePicker x:Name="dp_currentyear"
-                    DayVisible="False"
-                    MonthVisible="False"
+            BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <Label
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Center"
+                    Content="-Schrack Logo-" />
+                <Button
+                    Margin="0,0,20,0"
+                    Command="{Binding Backtonow}"
+                    Content="Ma" />
+                <DatePicker
+                    x:Name="dp_currentyear"
                     Width="100"
-                    Margin="0 0 20 0"/>
-      </StackPanel>
-    </Border>
-    <Grid Grid.Row="1">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="180"/>
-        <ColumnDefinition/>
-      </Grid.ColumnDefinitions>
-      <Border BorderThickness="0 0 1 0"
-              BorderBrush="Black">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-          </Grid.RowDefinitions>
-          <Border BorderBrush="Black"
-                  BorderThickness="0 0 0 1"
-                  Grid.Row="0">
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <Label Content="Távolléttípusok"
-                     Grid.Column="0"
-                     VerticalContentAlignment="Center"
-                     HorizontalAlignment="Center"
-                     BorderThickness="0 0 1 0"
-                     BorderBrush="Black"/>
-              <Button Content="+"
-                      Grid.Column="1"
-                      HorizontalAlignment="Stretch"
-                      Background="Transparent"
-                      HorizontalContentAlignment="Center"
-                      BorderThickness="0 0 1 1">
-                <Button.Flyout>
-                  <Flyout Placement="RightEdgeAlignedTop"
-                          ShowMode="TransientWithDismissOnPointerMoveAway">
-                    <Grid>
-                      <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                      </Grid.RowDefinitions>
-                      <Label Grid.Row="0"
-                             Content="Név"
-                             HorizontalAlignment="Left"
-                             Margin="0 0 0 15"/>
-                      <TextBox x:Name="NewLeaveTypeName"
-                               AcceptsReturn="False"
-                               AcceptsTab="False"
-                               Grid.Row="1"
-                               HorizontalAlignment="Stretch"
-                               Width="150"
-                               Margin="0 0 0 15"/>
-                      <Button Grid.Row="2"
-                              Content="Hozzáadás"
-                              Command="{Binding AddLeaveType}"
-                              CommandParameter="{Binding Path=#NewLeaveTypeName.Text}"/>
-                    </Grid>
-                  </Flyout>
-                </Button.Flyout>
-              </Button>
-            </Grid>
-          </Border>
-          <ListBox Grid.Row="1"
-                   ItemsSource="{Binding Model.Leavetypes}">
-            <ListBox.ItemTemplate>
-              <DataTemplate>
+                    Margin="0,0,20,0"
+                    DayVisible="False"
+                    MonthVisible="False" />
+                <Label Content="{Binding Temp}" />
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="0,0,1,0">
                 <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                  </Grid.ColumnDefinitions>
-                  <Label Grid.Column="0"
-                         Content="{Binding Displayname}"
-                         HorizontalAlignment="Left"
-                         Background="Aqua"/>
-                  <Button Grid.Column="1"
-                          Content="-"
-                          HorizontalAlignment="Right"
-                          BorderBrush="Transparent"
-                          Background="Transparent"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="0"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                BorderBrush="Black"
+                                BorderThickness="0,0,1,0"
+                                Content="Távolléttípusok" />
+                            <Button
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Background="Transparent"
+                                BorderThickness="0,0,1,1"
+                                Content="+">
+                                <Button.Flyout>
+                                    <Flyout Placement="RightEdgeAlignedTop" ShowMode="TransientWithDismissOnPointerMoveAway">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                Grid.Row="0"
+                                                Margin="0,0,0,15"
+                                                HorizontalAlignment="Left"
+                                                Content="Név" />
+                                            <TextBox
+                                                x:Name="NewLeaveTypeName"
+                                                Grid.Row="1"
+                                                Width="150"
+                                                Margin="0,0,0,15"
+                                                HorizontalAlignment="Stretch"
+                                                AcceptsReturn="False"
+                                                AcceptsTab="False" />
+                                            <Button
+                                                Grid.Row="2"
+                                                Command="{Binding AddLeaveType}"
+                                                CommandParameter="{Binding Path=#NewLeaveTypeName.Text}"
+                                                Content="Hozzáadás" />
+                                        </Grid>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Model.Leavetypes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Background="Aqua"
+                                        Content="{Binding Displayname}" />
+                                    <Button
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Content="-" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
+            </Border>
         </Grid>
-      </Border>
     </Grid>
-  </Grid>
 </UserControl>

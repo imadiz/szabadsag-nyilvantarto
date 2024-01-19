@@ -17,6 +17,9 @@ public partial class MainViewModel : ObservableObject
 
     public ReactiveCommand<Unit, Unit> Backtonow { get; }//Ma gomb
     public ReactiveCommand<string, Unit> AddLeaveType { get; }//Szabadság hozzáadás
+
+    [ObservableProperty]
+    private string _temp;
     public MainViewModel()
     {
         Backtonow = ReactiveCommand.Create(() => { Model.Currentyear = DateTimeOffset.Now; });//Visszaugrás idénre
@@ -24,6 +27,7 @@ public partial class MainViewModel : ObservableObject
         {
             Model.Leavetypes.Add(new Classes.LeaveType(leavename, $"_{leavename}"));//Távolléttípus hozzáadása
         });
+        Temp = Model.GetNetworkTime().ToString();
     }
 }
 //ThereforeCustomAPI ws19-06 mappástól másold ki!
