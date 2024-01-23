@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Classes="clr-namespace:Szakdolgozat.Classes"
+             xmlns:sys="clr-namespace:System"
              xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Szakdolgozat.Views.MainView"
@@ -17,7 +17,6 @@
     </Style>
   </UserControl.Styles>
   <UserControl.Resources>
-    <Classes:Converters x:Key="Converters"/>
   </UserControl.Resources>
   <Grid x:Name="MainGrid">
     <Grid.RowDefinitions>
@@ -26,17 +25,18 @@
     </Grid.RowDefinitions>
     <Border BorderThickness="0 0 0 1"
             BorderBrush="Black"
-            Grid.Row="0">
-      <StackPanel Orientation="Horizontal">
-        <Label Content="-Schrack Logo-"
-               VerticalAlignment="Center"
-               Margin="0 0 20 0"/>
-        <Button Content="Ma"
-                Margin="0 0 20 0"
-                Command="{Binding Backtonow}"/>
-        <DatePicker x:Name="dp_currentyear"
-                    DayVisible="False"
-                    MonthVisible="False"
+            BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <Label
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Center"
+                    Content="-Schrack Logo-" />
+                <Button
+                    Margin="0,0,20,0"
+                    Command="{Binding Backtonow}"
+                    Content="Ma" />
+                <DatePicker
+                    x:Name="dp_currentyear"
                     Width="100"
                     Margin="0 0 20 0"/>
       </StackPanel>

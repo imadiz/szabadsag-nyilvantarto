@@ -30,7 +30,6 @@ public partial class MainViewModel : ObservableObject
         {
             var test = 0;
         });
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét", "test"));
     }
 }
 //ThereforeCustomAPI ws19-06 mappástól másold ki!
