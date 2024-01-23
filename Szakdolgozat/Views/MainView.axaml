@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sys="clr-namespace:System"
+             xmlns:Classes="clr-namespace:Szakdolgozat.Classes"
              xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Szakdolgozat.Views.MainView"
@@ -17,6 +17,7 @@
     </Style>
   </UserControl.Styles>
   <UserControl.Resources>
+    <Classes:Converters x:Key="Converters"/>
   </UserControl.Resources>
   <Grid x:Name="MainGrid">
     <Grid.RowDefinitions>
@@ -81,13 +82,10 @@
                         <RowDefinition/>
                         <RowDefinition/>
                       </Grid.RowDefinitions>
-                      <Label Grid.Row="0"
-                             Content="Név"
-                             HorizontalAlignment="Left"
-                             Margin="0 0 0 15"/>
                       <TextBox x:Name="NewLeaveTypeName"
                                AcceptsReturn="False"
                                AcceptsTab="False"
+                               Watermark="Távollét neve"
                                Grid.Row="1"
                                HorizontalAlignment="Stretch"
                                Width="150"
@@ -103,24 +101,40 @@
             </Grid>
           </Border>
           <ListBox Grid.Row="1"
-                   ItemsSource="{Binding Model.Leavetypes}">
+                   ItemsSource="{Binding Model.Leavetypes}"
+                   Padding="0"
+                   Margin="0">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem">
+                <Setter Property="Padding" Value="0"/>
+              </Style>
+            </ListBox.Styles>
             <ListBox.ItemTemplate>
               <DataTemplate>
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                  </Grid.ColumnDefinitions>
-                  <Label Grid.Column="0"
-                         Content="{Binding Displayname}"
-                         HorizontalAlignment="Left"
-                         Background="Aqua"/>
-                  <Button Grid.Column="1"
-                          Content="-"
-                          HorizontalAlignment="Right"
-                          BorderBrush="Transparent"
-                          Background="Transparent"/>
-                </Grid>
+                <Label Content="{Binding Displayname}"
+                       HorizontalAlignment="Stretch"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Background="Aqua"
+                       PointerPressed="lbl_leavetype_flyout">
+                  <FlyoutBase.AttachedFlyout>
+                    <Flyout Placement="RightEdgeAlignedTop">
+                      <MenuItem Header="Névváltoztatás"
+                                PointerPressed="mi_leavetypenamechange"
+                                HorizontalAlignment="Center">
+                        <FlyoutBase.AttachedFlyout>
+                          <Flyout Placement="RightEdgeAlignedTop"
+                                  Closed="fo_leavetypenamechange_closed">
+                            <TextBox x:Name="txt_leavename_change"
+                                     Text="{Binding Displayname}"
+                                     HorizontalAlignment="Center"
+                                     DockPanel.Dock="Top"/>
+                          </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                      </MenuItem>
+                    </Flyout>
+                  </FlyoutBase.AttachedFlyout>
+                </Label>
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
