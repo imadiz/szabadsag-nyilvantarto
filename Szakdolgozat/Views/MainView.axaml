@@ -24,8 +24,7 @@
       <RowDefinition/>
     </Grid.RowDefinitions>
     <Border BorderThickness="0 0 0 1"
-            BorderBrush="Black"
-            BorderThickness="0,0,0,1">
+            BorderBrush="Black">
             <StackPanel Orientation="Horizontal">
                 <Label
                     Margin="0,0,20,0"
@@ -123,8 +122,7 @@
                                 PointerPressed="mi_leavetypenamechange"
                                 HorizontalAlignment="Center">
                         <FlyoutBase.AttachedFlyout>
-                          <Flyout Placement="RightEdgeAlignedTop"
-                                  Closed="fo_leavetypenamechange_closed">
+                          <Flyout Placement="RightEdgeAlignedTop">
                             <TextBox x:Name="txt_leavename_change"
                                      Text="{Binding Displayname}"
                                      HorizontalAlignment="Center"
