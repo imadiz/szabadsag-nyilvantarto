@@ -18,17 +18,12 @@ public partial class MainViewModel : ObservableObject
 
     public ReactiveCommand<Unit, Unit> Backtonow { get; }//Ma gomb
     public ReactiveCommand<string, Unit> AddLeaveType { get; }//Távolléttípus hozzáadás
-    public ReactiveCommand<string, Unit> ModifyLeaveTypeName { get; }//Távolléttípus névmódosítás
     public MainViewModel()
     {
         Backtonow = ReactiveCommand.Create(() => { Model.Currentyear = DateTimeOffset.Now; });//Visszaugrás idénre
         AddLeaveType = ReactiveCommand.Create<string>((string leavename/*<-CommandParameter*/) =>
         {
             Model.Leavetypes.Add(new LeaveType(leavename, $"_{leavename}"));//Távolléttípus hozzáadása
-        });
-        ModifyLeaveTypeName = ReactiveCommand.Create((string newname) =>
-        {
-            var test = 0;
         });
     }
 }

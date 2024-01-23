@@ -26,18 +26,17 @@
     <Border BorderThickness="0 0 0 1"
             BorderBrush="Black">
             <StackPanel Orientation="Horizontal">
-                <Label
-                    Margin="0,0,20,0"
-                    VerticalAlignment="Center"
-                    Content="-Schrack Logo-" />
-                <Button
-                    Margin="0,0,20,0"
-                    Command="{Binding Backtonow}"
-                    Content="Ma" />
-                <DatePicker
-                    x:Name="dp_currentyear"
-                    Width="100"
-                    Margin="0 0 20 0"/>
+                <Label Margin="0,0,20,0"
+                        VerticalAlignment="Center"
+                        Content="-Schrack Logo-" />
+                <Button Margin="0,0,20,0"
+                        Command="{Binding Backtonow}"
+                        Content="Ma" />
+                <DatePicker x:Name="dp_currentyear"
+                            Width="100"
+                            Margin="0 0 20 0"
+                            DayVisible="False"
+                            MonthVisible="False"/>
       </StackPanel>
     </Border>
     <Grid Grid.Row="1">

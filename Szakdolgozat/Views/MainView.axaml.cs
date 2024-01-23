@@ -26,4 +26,14 @@ public partial class MainView : UserControl
         }
         args.Handled = true;
     }
+    public void mi_leavetypenamechange(object sender, PointerPressedEventArgs args)
+    {
+        var ctl = sender as Control;
+        PointerPoint point = args.GetCurrentPoint(sender as Control);
+        if (ctl != null)
+        {
+            FlyoutBase.ShowAttachedFlyout(ctl);
+        }
+        args.Handled = true;
+    }
 }
