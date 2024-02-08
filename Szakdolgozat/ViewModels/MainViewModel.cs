@@ -47,11 +47,6 @@ public partial class MainViewModel : ObservableObject
         #endregion
 
         Model.Leavetypes.Add(new LeaveType("Teszttávollét", "testleave"));
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét1", "testleave1"));
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét2", "testleave2"));
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét4", "testleave4"));
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét5", "testleave5"));
-        Model.Leavetypes.Add(new LeaveType("Teszttávollét6", "testleave6"));
     }
 }
 //ThereforeCustomAPI ws19-06 mappástól másold ki!
