@@ -52,7 +52,8 @@
         <ColumnDefinition/>
       </Grid.ColumnDefinitions>
       <Border BorderThickness="0 0 1 0"
-              BorderBrush="Black">
+              BorderBrush="Black"
+              Grid.Column="0">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -157,6 +158,21 @@
           </ListBox>
         </Grid>
       </Border>
+      <ItemsControl ItemsSource="{Binding Model.Leavetypes}"
+                    Grid.Column="1">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel FlowDirection="LeftToRight"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              
+            </Grid>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
     </Grid>
   </Grid>
 </UserControl>

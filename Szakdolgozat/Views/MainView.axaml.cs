@@ -5,6 +5,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
+using Avalonia.VisualTree;
 using ReactiveUI;
 using System;
 using System.Linq;
@@ -56,7 +57,9 @@ public partial class MainView : UserControl
     {
         Button? btn = sender as Button;
 
-        MessageBus.Current.SendMessage<string>(btn.Name, "Debug");
+        MessageBus.Current.SendMessage<LeaveType>(new LeaveType(/*Új név megkeresése*/btn.FindAncestorOfType<DockPanel>().FindDescendantOfType<TextBox>().Text,
+                                                                /*Azonosító*/(btn.DataContext as LeaveType).Name),
+                                                                /*Üzenet szűrése*/"LeaveTypeNameChange");
 
         FlyoutBase.GetAttachedFlyout(btn.FindLogicalAncestorOfType<MenuItem>(false)).Hide();//Tüntesd el a névváltoztatás menüt
 

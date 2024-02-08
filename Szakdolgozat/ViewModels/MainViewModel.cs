@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Runtime.Intrinsics.X86;
@@ -26,7 +27,10 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        MessageBus.Current.Listen<string>("Debug").Subscribe(x => Model.DebugText = x);
+        MessageBus.Current.Listen<LeaveType>("LeaveTypeNameChange").Subscribe((leavetype) =>
+        {
+            Model.Leavetypes.First(x=>x.Name.Equals(leavetype.Name)/*Azonosító alapján megkeresés*/).Displayname = leavetype.Displayname;/*Megjelenítendő név változtatás*/
+        });
 
         #region Commandok elkészítése
         Backtonow = ReactiveCommand.Create(() => { Model.Currentyear = DateTimeOffset.Now; });//Visszaugrás idénre
@@ -43,6 +47,11 @@ public partial class MainViewModel : ObservableObject
         #endregion
 
         Model.Leavetypes.Add(new LeaveType("Teszttávollét", "testleave"));
+        Model.Leavetypes.Add(new LeaveType("Teszttávollét1", "testleave1"));
+        Model.Leavetypes.Add(new LeaveType("Teszttávollét2", "testleave2"));
+        Model.Leavetypes.Add(new LeaveType("Teszttávollét4", "testleave4"));
+        Model.Leavetypes.Add(new LeaveType("Teszttávollét5", "testleave5"));
+        Model.Leavetypes.Add(new LeaveType("Teszttávollét6", "testleave6"));
     }
 }
 //ThereforeCustomAPI ws19-06 mappástól másold ki!
