@@ -23,16 +23,39 @@ namespace Szakdolgozat
 
         [ObservableProperty]
         private ObservableCollection<LeaveType> _leavetypes = new();
-        public DateTimeOffset GetNetworkTime()
+
+        [ObservableProperty]
+        private DateTimeOffset _currentTime = new();
+
+        [ObservableProperty]
+        private string _debugText = "";
+        public async void StartNetworkTime()
         {
             HttpClient client = new();
 
-            Task<string> response = client.GetStringAsync("https://worldtimeapi.org/api/timezone/Europe/Budapest");
-            string json_response = response.Result;
-            JsonNode rootnode = JsonNode.Parse(json_response)!;
+            //Task-ok használatánál csak az await kulcsszót fogadja el várakozásra, ha van .Wait() vagy .Result ott megáll a kód hiba nélkül.
 
-            return (DateTimeOffset)rootnode["datetime"]!;
+            while (true)
+            {
+                string json_response = "";
+
+                try
+                {
+                    json_response = await client.GetStringAsync("https://worldtimeapi.org/api/timezone/Europe/Budapest");
+                    JsonNode rootnode = JsonNode.Parse(json_response)!;
+                    CurrentTime = (DateTimeOffset)rootnode["datetime"]!;
+                }
+                catch (HttpRequestException re_ex)
+                {
+                    CurrentTime = DateTimeOffset.Now;
+                }
+                await Task.Delay(500);
+            }            
         }
 
+        public ModelClass()
+        {
+            Task.Run(StartNetworkTime);
+        }
     }
 }

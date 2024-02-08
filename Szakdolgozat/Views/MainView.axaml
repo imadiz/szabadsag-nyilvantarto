@@ -14,6 +14,7 @@
   </Design.DataContext>
   <UserControl.Styles>
     <Style Selector="Grid#MainGrid">
+      
     </Style>
   </UserControl.Styles>
   <UserControl.Resources>
@@ -25,20 +26,26 @@
     </Grid.RowDefinitions>
     <Border BorderThickness="0 0 0 1"
             BorderBrush="Black">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
                 <Label Margin="0,0,20,0"
                         VerticalAlignment="Center"
                         Content="-Schrack Logo-" />
                 <Button Margin="0,0,20,0"
                         Command="{Binding Backtonow}"
-                        Content="Ma" />
+                        Content="Ma"/>
                 <DatePicker x:Name="dp_currentyear"
                             Width="100"
                             Margin="0 0 20 0"
                             DayVisible="False"
                             MonthVisible="False"/>
+              <Label Content="{Binding Model.CurrentTime, FallbackValue='Idő lekérése...'}"
+                     VerticalAlignment="Center"/>
+              <Label Content="{Binding Model.DebugText}"
+                     VerticalAlignment="Center"
+                     VerticalContentAlignment="Center"/>
       </StackPanel>
-    </Border>
+    </Border> 
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="180"/>
@@ -113,7 +120,6 @@
                        HorizontalAlignment="Stretch"
                        VerticalContentAlignment="Center"
                        HorizontalContentAlignment="Center"
-                       Background="Aqua"
                        PointerPressed="lbl_leavetype_flyout">
                   <FlyoutBase.AttachedFlyout>
                     <Flyout Placement="RightEdgeAlignedTop">
@@ -122,10 +128,24 @@
                                 HorizontalAlignment="Center">
                         <FlyoutBase.AttachedFlyout>
                           <Flyout Placement="RightEdgeAlignedTop">
-                            <TextBox x:Name="txt_leavename_change"
-                                     Text="{Binding Displayname}"
-                                     HorizontalAlignment="Center"
-                                     DockPanel.Dock="Top"/>
+                            <DockPanel>
+                              <TextBox x:Name="txt_leavename_change"
+                                       Text="{Binding Displayname, Mode=OneTime}"
+                                       HorizontalAlignment="Stretch"
+                                       DockPanel.Dock="Top"/>
+                              <StackPanel Orientation="Horizontal">
+                                <Button x:Name="btn_namechange_confirm"
+                                        Content="Megerősítés"
+                                        HorizontalAlignment="Left"
+                                        DockPanel.Dock="Bottom"
+                                        Click="btn_namechange_confirm_click"/>
+                                <Button x:Name="btn_namechange_cancel"
+                                        Content="Mégse"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Bottom"
+                                        Click="btn_namechange_cancel_click"/>
+                              </StackPanel>
+                            </DockPanel>
                           </Flyout>
                         </FlyoutBase.AttachedFlyout>
                       </MenuItem>
