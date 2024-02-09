@@ -64,29 +64,31 @@ namespace Szakdolgozat
             /*Szóval az a terv, hogy minden hónap első napjától elmegyek visszafele, amíg nem találok egy hétfőt.
               Utána elindulok előrefele, addig amíg a hónap végéig nem érek, így van egy 2D-s tömböm ami hétfőtől kezdődik minden hónapra, így a megjelenítés megvan.*/
 
-            //for (int i = 1; i <= 12; i++)
-            //{
-            //    MonthDisplay CurrentDisplay = new(DateTimeFormatInfo.InvariantInfo.GetMonthName(i), new ObservableCollection<DateTimeOffset>());//Jelen megjelenítő
+            for (int i = 1; i <= 12; i++)
+            {
+                MonthDisplay CurrentDisplay = new(DateTimeFormatInfo.InvariantInfo.GetMonthName(i), new ObservableCollection<DateTimeOffset>());//Jelen megjelenítő
 
-            //    DateTime date = new DateTime(DateTime.Now.Year, i, 1);//Idén, jelen hónap elseje
+                DateTime date = new DateTime(DateTime.Now.Year, i, 1);//Idén, jelen hónap elseje
 
-            //    while (date.DayOfWeek != DayOfWeek.Monday)
-            //        date = date.AddDays(-1);
+                while (date.DayOfWeek != DayOfWeek.Monday)
+                    date = date.AddDays(-1);
 
-            //    bool EnteredMonth = false;
+                bool EnteredMonth = false;
 
-            //    while (EnteredMonth && //Ha már belépett a hónapba
-            //           !date.Month.Equals(new DateTime(DateTime.Now.Year, i, 1)))//Ha már nincs benne a jelenlegi hónapban
-            //    {
-            //        CurrentDisplay.DisplayDates.Add(date);
-            //        date = date.AddDays(1);
+                while (true)
+                {
+                    CurrentDisplay.DisplayDates.Add(date);
+                    date = date.AddDays(1);
 
-            //        if (date.Month.Equals(i))
-            //            EnteredMonth = true;
-            //    }
+                    if (date.Month.Equals(i))
+                        EnteredMonth = true;
 
-            //    AllMonths.Add(CurrentDisplay);
-            //}
+                    if (EnteredMonth && !date.Month.Equals(i))//Ha már belépett a hónapba, és ki is lépett
+                        break;
+                }
+
+                AllMonths.Add(CurrentDisplay);
+            }
         }
     }
 }

@@ -158,17 +158,47 @@
           </ListBox>
         </Grid>
       </Border>
-      <ItemsControl ItemsSource="{Binding Model.Leavetypes}"
-                    Grid.Column="1">
+      <ItemsControl Grid.Column="1"
+                    ItemsSource="{Binding Model.AllMonths}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <WrapPanel FlowDirection="LeftToRight"/>
+            <UniformGrid Margin="10"/>
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <Grid>
-              
+              <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Label Content="{Binding MonthName}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Grid.Row="0"/>
+              <ItemsControl ItemsSource="{Binding DisplayDates}"
+                            Grid.Row="1">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <UniformGrid/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Button Content="{Binding Day}"
+                            Width="25"
+                            Height="25"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center">
+                      <Button.Padding>
+                        0
+                      </Button.Padding>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
             </Grid>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
