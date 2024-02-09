@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System"
              xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
              x:Class="Szakdolgozat.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
@@ -162,7 +162,8 @@
                     ItemsSource="{Binding Model.AllMonths}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <UniformGrid Margin="10"/>
+            <WrapPanel HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
@@ -180,22 +181,19 @@
                             Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
-                    <UniformGrid/>
+                    <UniformGrid Width="300"
+                                 Margin="50 0 50 0"/>
                   </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <Button Content="{Binding Day}"
-                            Width="25"
-                            Height="25"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center">
-                      <Button.Padding>
-                        0
-                      </Button.Padding>
-                    </Button>
+                            VerticalContentAlignment="Center"
+                            Width="40"
+                            Height="40"/>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>

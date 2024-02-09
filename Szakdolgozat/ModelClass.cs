@@ -49,9 +49,10 @@ namespace Szakdolgozat
                     JsonNode rootnode = JsonNode.Parse(json_response)!;
                     CurrentTime = (DateTimeOffset)rootnode["datetime"]!;
                 }
-                catch (HttpRequestException re_ex)
+                catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
-                    CurrentTime = DateTimeOffset.Now;
+                    CurrentTime = new DateTimeOffset(new DateTime(1970, 1, 1));//Alap idő
+                    return;//Kilépés
                 }
                 await Task.Delay(500);
             }            
@@ -66,7 +67,9 @@ namespace Szakdolgozat
 
             for (int i = 1; i <= 12; i++)
             {
-                MonthDisplay CurrentDisplay = new(DateTimeFormatInfo.InvariantInfo.GetMonthName(i), new ObservableCollection<DateTimeOffset>());//Jelen megjelenítő
+                MonthDisplay CurrentDisplay = new(string.Concat(char.ToUpper(DateTimeFormatInfo.GetInstance(new CultureInfo("hu-HU")).MonthNames[i - 1][0]),//Első karakter nagybetű
+                                                                DateTimeFormatInfo.GetInstance(new CultureInfo("hu-HU")).MonthNames[i - 1][1..]),//Többi kicsi
+                                                  new ObservableCollection<DateTimeOffset>());//Dátumok listája
 
                 DateTime date = new DateTime(DateTime.Now.Year, i, 1);//Idén, jelen hónap elseje
 
