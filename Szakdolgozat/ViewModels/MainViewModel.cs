@@ -18,6 +18,8 @@ namespace Szakdolgozat.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
+    //HTTPClient classal lehet kommunikálni az API-val
+
     [ObservableProperty]//Ez az attribútum megcsinálja az encapsulation-t, ami a binding-hoz kell és létrehoz egy publikus változót nagybetűs névvel. (Ebben az esetben Model)
     private ModelClass _model = new();
 

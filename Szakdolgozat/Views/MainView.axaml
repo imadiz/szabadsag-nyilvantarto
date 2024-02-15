@@ -158,49 +158,60 @@
           </ListBox>
         </Grid>
       </Border>
-      <ItemsControl Grid.Column="1"
-                    ItemsSource="{Binding Model.AllMonths}">
-        <ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <WrapPanel HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition/>
-              </Grid.RowDefinitions>
-              <Label Content="{Binding MonthName}"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"
-                     Grid.Row="0"/>
-              <ItemsControl ItemsSource="{Binding DisplayDates}"
-                            Grid.Row="1">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <UniformGrid Width="300"
-                                 Margin="50 0 50 0"/>
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <Button Content="{Binding Day}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Width="40"
-                            Height="40"/>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </Grid>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
+      <ScrollViewer Grid.Column="1"
+                    AllowAutoHide="True">
+        <ItemsControl ItemsSource="{Binding Model.AllMonths}"
+                      Grid.Column="1">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="25"/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="{Binding MonthName}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Grid.Row="0"/>
+                <ItemsControl ItemsSource="{Binding DisplayDates}"
+                              Grid.Row="1">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <UniformGrid Width="275"
+                                   Margin="50 0 50 0"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Button Content="{Binding Day}"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              Width="40"
+                              Height="40"
+                              Margin="3">
+                        <Flyout>
+                          <StackPanel Orientation="Vertical"
+                                      DataContext="{Binding $parent[Button]}">
+                            <Label Content="{Binding }"/>
+                          </StackPanel>
+                        </Flyout>
+                      </Button>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
     </Grid>
   </Grid>
 </UserControl>
