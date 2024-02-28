@@ -13,6 +13,10 @@ using System.Text.Json;
 using System.IO;
 using System.Text.Json.Nodes;
 using System.Globalization;
+using static System.Net.WebRequestMethods;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace Szakdolgozat
 {
@@ -45,9 +49,8 @@ namespace Szakdolgozat
 
                 try
                 {
-                    json_response = await client.GetStringAsync("https://worldtimeapi.org/api/timezone/Europe/Budapest");
-                    JsonNode rootnode = JsonNode.Parse(json_response)!;
-                    CurrentTime = (DateTimeOffset)rootnode["datetime"]!;
+                    json_response = await (await client.GetAsync("http://localhost:9000/api/value") as HttpResponseMessage).Content.ReadAsStringAsync();
+                    var received_json = JToken.Parse(json_response);
                 }
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
@@ -57,14 +60,10 @@ namespace Szakdolgozat
                 await Task.Delay(500);
             }            
         }
-
-        public ModelClass()
+        public void CreateCalendarDisplay()
         {
-            Task.Run(StartNetworkTime);
-
             /*Szóval az a terv, hogy minden hónap első napjától elmegyek visszafele, amíg nem találok egy hétfőt.
               Utána elindulok előrefele, addig amíg a hónap végéig nem érek, így van egy 2D-s tömböm ami hétfőtől kezdődik minden hónapra, így a megjelenítés megvan.*/
-
             for (int i = 1; i <= 12; i++)
             {
                 MonthDisplay CurrentDisplay = new(string.Concat(char.ToUpper(DateTimeFormatInfo.GetInstance(new CultureInfo("hu-HU")).MonthNames[i - 1][0]),//Első karakter nagybetű
@@ -92,6 +91,21 @@ namespace Szakdolgozat
 
                 AllMonths.Add(CurrentDisplay);
             }
+        }
+
+        public async void APICallTesting()
+        {
+            HttpClient client = new();
+            byte[] authdata = new UTF8Encoding().GetBytes("a:a");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));
+            HttpResponseMessage response = await client.GetAsync("http://localhost:9000/api/private");
+            DebugText = await response.Content.ReadAsStringAsync();
+        }
+        public ModelClass()
+        {
+            Task.Run(StartNetworkTime);
+            CreateCalendarDisplay();
+            APICallTesting();
         }
     }
 }
