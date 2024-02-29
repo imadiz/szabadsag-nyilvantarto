@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace LeaveAPI
@@ -6,9 +9,21 @@ namespace LeaveAPI
     public class ValueController : ApiController
     {
         // GET api/values 
-        public IEnumerable<string> Get()
+        public JObject Get_time(string p = null)
         {
-            return new string[] { "Teszt", "Elek" };
+            switch (p)
+            {
+                case "time":
+                    return new JObject
+                    {
+                        { "CurrentDateTimeOffset", DateTimeOffset.Now }
+                    };
+                default:
+                    return new JObject
+                    {
+                        { "Error", "Unkown parameter" }
+                    };
+            }
         }
 
         // GET api/values 

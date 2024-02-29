@@ -45,12 +45,9 @@ namespace Szakdolgozat
 
             while (true)
             {
-                string json_response = "";
-
                 try
                 {
-                    json_response = await (await client.GetAsync("http://localhost:9000/api/value") as HttpResponseMessage).Content.ReadAsStringAsync();
-                    var received_json = JToken.Parse(json_response);
+                    DebugText = SendAPICall("").Result["CurrentDateTimeOffset"].Value<string>();
                 }
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
@@ -93,19 +90,18 @@ namespace Szakdolgozat
             }
         }
 
-        public async void APICallTesting()
+        public async Task<JObject> SendAPICall(string CallType)
         {
             HttpClient client = new();
-            byte[] authdata = new UTF8Encoding().GetBytes("a:a");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));
-            HttpResponseMessage response = await client.GetAsync("http://localhost:9000/api/private");
-            DebugText = await response.Content.ReadAsStringAsync();
+            byte[] authdata = new UTF8Encoding().GetBytes("a:a");/*Felhasználónév:Jelszó*/
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));//Auth adatok request-hez adása
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/private/{CallType}");//Call elküldése
+            return JObject.Parse(await response.Content.ReadAsStringAsync());
         }
         public ModelClass()
         {
             Task.Run(StartNetworkTime);
             CreateCalendarDisplay();
-            APICallTesting();
         }
     }
 }

@@ -10,12 +10,16 @@ using System.Web.Http;
 
 namespace LeaveAPI 
 {
-    public class PublicController: ApiController
+    public class PublicController : ApiController
     {
         // GET api/values 
-        public Classes.ThereforeHolidays GetThereforeHolidays(string from, string to)
+        public JObject GetCurrentTime()
         {
-            return new Classes.ThereforeHolidays();
+            JObject JsonDateTime = new JObject
+            {
+                { "CurrentDateTimeOffset", DateTimeOffset.Now }
+            };
+            return JsonDateTime;
         }
     }
 }
