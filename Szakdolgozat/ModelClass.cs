@@ -37,7 +37,7 @@ namespace Szakdolgozat
 
         [ObservableProperty]
         private ObservableCollection<MonthDisplay> _allMonths = new();
-        public async void StartNetworkTime()
+        public async Task StartNetworkTime()
         {
             HttpClient client = new();
 
@@ -47,7 +47,7 @@ namespace Szakdolgozat
             {
                 try
                 {
-                    DebugText = SendAPICall("").Result["CurrentDateTimeOffset"].Value<string>();
+                    DebugText = SendAPICall("public/GetCurrentTime").Result["CurrentDateTimeOffset"].Value<string>();
                 }
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
@@ -95,12 +95,14 @@ namespace Szakdolgozat
             HttpClient client = new();
             byte[] authdata = new UTF8Encoding().GetBytes("a:a");/*Felhasználónév:Jelszó*/
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));//Auth adatok request-hez adása
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/private/{CallType}");//Call elküldése
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/{CallType}");//Call elküldése
+            //TODO: paraméterezni: http://localhost:9000/api/
             return JObject.Parse(await response.Content.ReadAsStringAsync());
         }
+        //TODO: SQL-ben a Leave Order 1000-ként lépeget
+        //TODO: SQL-ben a User_Leave.IsConfirmed a Username aki engedélyezte, NULL, ha nem lett engedélyezve
         public ModelClass()
         {
-            Task.Run(StartNetworkTime);
             CreateCalendarDisplay();
         }
     }

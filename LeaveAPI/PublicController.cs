@@ -12,8 +12,8 @@ namespace LeaveAPI
 {
     public class PublicController : ApiController
     {
-        // GET api/values 
-        public JObject GetCurrentTime()
+        // GET api/public/ 
+        public JObject GetCurrentTime/*A függvény neve a /-jel után jön, utána ha van, ?paraméter1=érték1&paraméter2=érték2*/()
         {
             JObject JsonDateTime = new JObject
             {

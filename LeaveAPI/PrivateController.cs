@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,13 @@ namespace LeaveAPI
     [Authorize]
     public class PrivateController : ApiController
     {
-        // GET api/private 
-        public IEnumerable<string> Get()
+        // GET api/private/
+        public JObject Get()
         {
-            return new string[] { "Minta", "Mókus" };
+            return new JObject()
+            {
+                { "Error", "No parameter given"}
+            };
         }
     }
 }
