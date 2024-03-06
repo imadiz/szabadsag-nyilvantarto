@@ -12,13 +12,6 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-  <UserControl.Styles>
-    <Style Selector="Grid#MainGrid">
-      
-    </Style>
-  </UserControl.Styles>
-  <UserControl.Resources>
-  </UserControl.Resources>
   <Grid x:Name="MainGrid">
     <Grid.RowDefinitions>
       <RowDefinition Height="40"/>
