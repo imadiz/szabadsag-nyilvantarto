@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Browser" Version="11.0.7" />
-    <PackageReference Include="Microsoft.NET.Build.Containers" Version="8.0.101" />
+    <PackageReference Include="Avalonia.Browser" Version="11.0.10" />
+    <PackageReference Include="Microsoft.NET.Build.Containers" Version="8.0.202" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,5 +8,5 @@
         x:Class="Szakdolgozat.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Szakdolgozat">
-        <views:MainView />
+  <views:ControlView/>
 </Window>

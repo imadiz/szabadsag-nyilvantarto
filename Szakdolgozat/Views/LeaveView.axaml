@@ -5,13 +5,16 @@
              xmlns:sys="clr-namespace:System"
              xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
-             x:Class="Szakdolgozat.Views.MainView"
-             x:DataType="vm:MainViewModel">
+             x:Class="Szakdolgozat.Views.LeaveView"
+             x:DataType="vm:LeaveViewModel">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
+    <vm:LeaveViewModel/>
   </Design.DataContext>
+  <UserControl.DataContext>
+    <vm:LeaveViewModel/>
+  </UserControl.DataContext>
   <Grid x:Name="MainGrid">
     <Grid.RowDefinitions>
       <RowDefinition Height="40"/>

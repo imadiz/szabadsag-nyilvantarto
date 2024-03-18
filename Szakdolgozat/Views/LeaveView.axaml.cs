@@ -16,13 +16,13 @@ using Szakdolgozat.ViewModels;
 
 namespace Szakdolgozat.Views;
 
-public partial class MainView : UserControl
+public partial class LeaveView : UserControl
 {
-    MainViewModel? VM;
-    public MainView()
+    LeaveViewModel? VM;
+    public LeaveView()
     {
         InitializeComponent();
-        VM = DataContext as MainViewModel;
+        VM = DataContext as LeaveViewModel;
         dp_currentyear.Bind(DatePicker.SelectedDateProperty, new Binding("Model.Currentyear", BindingMode.Default));//Ez azért kell mert XAML-ben nincsen a Binding-ban ilyen StringConversion.
     }
     public void lbl_leavetype_flyout(object sender, PointerPressedEventArgs args)

@@ -2,8 +2,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="1280" d:DesignHeight="720"
-             x:Class="Szakdolgozat.Views.LoginView">
-  
+             xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             x:Class="Szakdolgozat.Views.LoginView"
+             x:CompileBindings="False">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:LoginViewModel/>
+  </Design.DataContext>
+  <UserControl.DataContext>
+    <vm:LoginViewModel/>
+  </UserControl.DataContext>
+  <Grid>
+    <Border BorderThickness="1"
+            BorderBrush="#adadad"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            CornerRadius="10"
+            BoxShadow="5 5 10 0 DarkGray"
+            Padding="10"
+            MinWidth="300">
+      <Grid RowDefinitions="*, *">
+        <Label Content="Szabadság-nyilvántartó"
+               FontSize="32"
+               HorizontalAlignment="Stretch"
+               HorizontalContentAlignment="Center"
+               BorderBrush="#adadad"
+               BorderThickness="0 0 0 1"
+               Grid.Row="0"
+               Margin="0 0 0 15"/>
+        <Grid RowDefinitions="*, *, *, *, *"
+              Grid.Row="1"
+              Margin="15 0 15 15">
+          <Label Content="Felhasználónév"
+               FontSize="20"
+               Grid.Row="0"/>
+          <TextBox x:Name="txt_user"
+                   BorderBrush="{Binding UsernameBoxBorderColor}"
+                   FontSize="15"
+                   Margin="0 0 0 15"
+                   Grid.Row="1"/>
+          <Label Content="Jelszó"
+                 FontSize="20"
+                 Grid.Row="2"/>
+          <TextBox x:Name="txt_pwd"
+                   BorderBrush="{Binding PasswordBoxBorderColor}"
+                   FontSize="15"
+                   PasswordChar="*"
+                   Margin="0 0 0 15"
+                   Grid.Row="3"/>
+          <Button x:Name="btn_login" 
+                  Content="Bejelentkezés"
+                  Grid.Row="4"
+                  FontSize="20"
+                  Background="Transparent"
+                  BorderBrush="#adadad"
+                  CornerRadius="10"
+                  HorizontalAlignment="Center"
+                  Click="Button_Click"/>
+        </Grid>
+      </Grid>
+    </Border>
+  </Grid>
 </UserControl>

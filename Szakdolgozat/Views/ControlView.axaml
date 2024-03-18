@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Szakdolgozat.ViewModels"
+             xmlns:proj="clr-namespace:Szakdolgozat"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Szakdolgozat.Views.ControlView"
+             x:CompileBindings="False">
+  <UserControl.DataContext>
+    <vm:ControlViewModel/>
+  </UserControl.DataContext>
+  <Design.DataContext>
+    <vm:ControlViewModel/>
+  </Design.DataContext>
+  <UserControl.Content>
+    <Binding Path="CurrentPage"/>
+  </UserControl.Content>
+</UserControl>

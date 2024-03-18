@@ -7,16 +7,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.Media.TextFormatting;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using Szakdolgozat.Classes;
+using Szakdolgozat.Views;
 
 namespace Szakdolgozat.ViewModels;
 
-public partial class MainViewModel : ObservableObject
+public partial class LeaveViewModel : ObservableObject
 {
     //HTTPClient classal lehet kommunikálni az API-val
 
@@ -27,7 +29,7 @@ public partial class MainViewModel : ObservableObject
     public ReactiveCommand<string, Unit> AddLeaveType { get; }//Távolléttípus hozzáadás
     public ReactiveCommand<LeaveType, Unit> LeaveTypeNameChange { get; }//Távolléttípus névváltoztatás
 
-    public MainViewModel()
+    public LeaveViewModel()
     {
         MessageBus.Current.Listen<LeaveType>("LeaveTypeNameChange").Subscribe((leavetype) =>
         {
