@@ -14,10 +14,7 @@ namespace LeaveAPI
         // GET api/private/
         public JObject Get()
         {
-            return new JObject()
-            {
-                { "Error", "No parameter given"}
-            };
+            return new JObject();
         }
     }
 }

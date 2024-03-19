@@ -20,6 +20,11 @@ namespace LeaveAPI
 
     public class Startup
     {
+        /*Észrevételek:
+          A controller classok nevei és a benne lévő függvények határozzák meg a resource-ok path-jeit. (A függvénynevek legelején kell a HTTP method: GET, PUT, POST vagy DELETE)
+          Például ha van egy TestController-en belül egy GetTime, akkor http://localhost:0000/Test/Time
+          A megadott paraméterek a függvények paramétereiként viselkednek, de ugyanolyan típusnak kell lenniük.
+          */
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
@@ -50,10 +55,11 @@ namespace LeaveAPI
         {
             if (username == password)
             {
-                return new List<Claim>
+                List<Claim> claims = new List<Claim>
                 {
                     new Claim("name", username)
                 };
+                return claims;
             }
             return null;
         }
@@ -77,7 +83,7 @@ namespace LeaveAPI
                 // Get the claim principal
                 ClaimsPrincipal principal = actionContext.ControllerContext.RequestContext.Principal as ClaimsPrincipal;
 
-                // Get the scope clain. Ensure that the issuer is for the correcr Auth0 domain
+                // Get the scope claim. Ensure that the issuer is for the correct Auth0 domain
                 var scopeClaim = principal?.Claims.FirstOrDefault(c => c.Type == "scope" && c.Issuer == domain);
                 if (scopeClaim != null)
                 {

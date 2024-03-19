@@ -23,7 +23,7 @@ public partial class LeaveViewModel : ObservableObject
     //HTTPClient classal lehet kommunikálni az API-val
 
     [ObservableProperty]//Ez az attribútum megcsinálja az encapsulation-t, ami a binding-hoz kell és létrehoz egy publikus változót nagybetűs névvel. (Ebben az esetben Model)
-    private ModelClass _model = new();
+    private LeaveModelClass _model = new();
 
     public ReactiveCommand<Unit, Unit> Backtonow { get; }//Ma gomb
     public ReactiveCommand<string, Unit> AddLeaveType { get; }//Távolléttípus hozzáadás

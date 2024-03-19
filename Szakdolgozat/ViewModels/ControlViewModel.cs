@@ -18,13 +18,10 @@ namespace Szakdolgozat.ViewModels
 
         public ControlViewModel()
         {
-            MessageBus.Current.Listen<string>("ChangeViews").Subscribe(async (changelogin) =>
+            MessageBus.Current.Listen<string>("ChangeView").Subscribe(async (changelogin) =>
             {
-                if (changelogin.Equals("Signal"))
-                {
-                    await Task.Delay(50);//Animációvárás
-                    CurrentPage = new LeaveView();//Beléptetés
-                }
+                await Task.Delay(50);//Animációvárás
+                CurrentPage = new LeaveView();//Beléptetés
             });
         }
     }

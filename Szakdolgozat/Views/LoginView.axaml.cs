@@ -15,6 +15,6 @@ public partial class LoginView : UserControl
 
     private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        MessageBus.Current.SendMessage("Signal", "ChangeViews");
+        MessageBus.Current.SendMessage("", "ChangeView");
     }
 }

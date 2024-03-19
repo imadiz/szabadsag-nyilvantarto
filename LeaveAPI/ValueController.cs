@@ -8,24 +8,6 @@ namespace LeaveAPI
 {
     public class ValueController : ApiController
     {
-        // GET api/values 
-        public JObject Get_time(string p = null)
-        {
-            switch (p)
-            {
-                case "time":
-                    return new JObject
-                    {
-                        { "CurrentDateTimeOffset", DateTimeOffset.Now }
-                    };
-                default:
-                    return new JObject
-                    {
-                        { "Error", "Unkown parameter" }
-                    };
-            }
-        }
-
         // GET api/values/
         public string Get(int id)
         {

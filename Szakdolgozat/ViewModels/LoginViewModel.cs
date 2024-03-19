@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Szakdolgozat.Models;
 
 namespace Szakdolgozat.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
         [ObservableProperty]
-        private SolidColorBrush _usernameBoxBorderColor = new(Colors.DarkGray);
-
-        [ObservableProperty]
-        private SolidColorBrush _passwordBoxBorderColor = new(Colors.DarkGray);
+        private LoginModelClass _model = new LoginModelClass();
     }
 }

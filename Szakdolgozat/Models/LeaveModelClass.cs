@@ -20,7 +20,7 @@ using System.Net.Http.Headers;
 
 namespace Szakdolgozat
 {
-    public partial class ModelClass : ObservableObject
+    public partial class LeaveModelClass : ObservableObject
     {
         //Adatok és logika
         [ObservableProperty]
@@ -52,7 +52,6 @@ namespace Szakdolgozat
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
                     CurrentTime = new DateTimeOffset(new DateTime(1970, 1, 1));//Alap idő
-                    return;//Kilépés
                 }
                 await Task.Delay(500);
             }            
@@ -101,7 +100,7 @@ namespace Szakdolgozat
         }
         //TODO: SQL-ben a Leave Order 1000-ként lépeget
         //TODO: SQL-ben a User_Leave.IsConfirmed a Username aki engedélyezte, NULL, ha nem lett engedélyezve
-        public ModelClass()
+        public LeaveModelClass()
         {
             CreateCalendarDisplay();
         }
