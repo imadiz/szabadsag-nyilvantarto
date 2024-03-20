@@ -14,10 +14,10 @@ using System.Configuration;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using System;
+using System.Data.SqlClient;
 
 namespace LeaveAPI
 {
-
     public class Startup
     {
         /*Észrevételek:
@@ -25,8 +25,17 @@ namespace LeaveAPI
           Például ha van egy TestController-en belül egy GetTime, akkor http://localhost:0000/Test/Time
           A megadott paraméterek a függvények paramétereiként viselkednek, de ugyanolyan típusnak kell lenniük.
           */
+
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
+        public SqlConnection GetSqlConnString()//SQLConnectionString
+        {
+            return new SqlConnection($@"Server={Environment.MachineName}\SQLEXPRESS;" +
+                                       "Trusted_Connection=True;" +
+                                       "Database=Szabadsagnyilvantarto;" +
+                                       "Connection timeout=10;" +
+                                       "Integrated Security=SSPI;");
+        }
         public void Configuration(IAppBuilder appBuilder)
         {
             // Configure Web API for self-host. 
@@ -47,23 +56,27 @@ namespace LeaveAPI
             };
 
             //Basic authentication
-            appBuilder.UseBasicAuthentication(new BasicAuthenticationOptions("SecureAPI", async (username, password) => await Authenticate (username, password)));
+            appBuilder.UseBasicAuthentication(new BasicAuthenticationOptions("SecureAPI", async (username, password) => Authenticate (username, password)));
             appBuilder.UseWebApi(config);
         }
 
-        private async Task<IEnumerable<Claim>> Authenticate (string username, string password)
+        private IEnumerable<Claim> Authenticate (string username, string password)
         {
-            if (username == password)
+            using (SqlConnection MyConn = GetSqlConnString())
             {
-                List<Claim> claims = new List<Claim>
-                {
-                    new Claim("name", username)
-                };
-                return claims;
-            }
-            return null;
-        }
+                SqlCommand GetUser = new SqlCommand($"SELECT * FROM Users WHERE username = '{username}' AND password = '{password.GetHashCode()}'", MyConn);//User megkeresése
+                MyConn.Open();//Connection megnyitása
+                SqlDataReader reader = GetUser.ExecuteReader();//Reader elindítása
+                bool FoundUser = reader.HasRows;//Van-e találat
 
+                reader.Close();//Reader bezárás
+
+                if (FoundUser)//Találat alapján beengedés
+                    return new List<Claim>() { new Claim(ClaimTypes.NameIdentifier, username) };
+                else
+                    return null;
+            }                
+        }
         public class ScopeAuthorizeAttribute : AuthorizeAttribute
         {
             private readonly string scope;
