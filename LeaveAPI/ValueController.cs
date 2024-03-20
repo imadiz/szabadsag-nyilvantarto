@@ -9,9 +9,13 @@ namespace LeaveAPI
     public class ValueController : ApiController
     {
         // GET api/values/
-        public string Get(int id)
+        public JObject Get(int id)
         {
-            return "value";
+            return new JObject()
+            {
+                { "CallName", "Get" },
+                { "Value", id.ToString() }
+            };
         }
 
         // POST api/values 
