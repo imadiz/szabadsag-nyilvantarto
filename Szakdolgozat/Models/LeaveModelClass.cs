@@ -17,6 +17,7 @@ using static System.Net.WebRequestMethods;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace Szakdolgozat
 {
@@ -47,7 +48,7 @@ namespace Szakdolgozat
             {
                 try
                 {
-                    DebugText = SendAPICall("public/GetCurrentTime").Result["CurrentDateTimeOffset"].Value<string>();
+                    DebugText = SendAPICall("public/CurrentTime").Result["Value"].Value<string>();
                 }
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
@@ -89,17 +90,19 @@ namespace Szakdolgozat
             }
         }
 
-        public async Task<JObject> SendAPICall(string CallType)
+        public async Task<JObject> SendAPICall(string CallName)
         {
             HttpClient client = new();
-            byte[] authdata = new UTF8Encoding().GetBytes("a:a");/*Felhasználónév:Jelszó*/
+
+            byte[] authdata = new UTF8Encoding().GetBytes("a:a");/*Tech. Felhasználónév:Jelszó*/
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));//Auth adatok request-hez adása
-            HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/{CallType}");//Call elküldése
+
             //TODO: paraméterezni: http://localhost:9000/api/
+            HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/{CallName}");//Call elküldése
+
             return JObject.Parse(await response.Content.ReadAsStringAsync());
         }
-        //TODO: SQL-ben a Leave Order 1000-ként lépeget
-        //TODO: SQL-ben a User_Leave.IsConfirmed a Username aki engedélyezte, NULL, ha nem lett engedélyezve
+        
         public LeaveModelClass()
         {
             CreateCalendarDisplay();

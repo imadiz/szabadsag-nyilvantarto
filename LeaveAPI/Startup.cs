@@ -20,11 +20,23 @@ namespace LeaveAPI
 {
     public class Startup
     {
-        /*Észrevételek:
-          A controller classok nevei és a benne lévő függvények határozzák meg a resource-ok path-jeit. (A függvénynevek legelején kell a HTTP method: GET, PUT, POST vagy DELETE)
-          Például ha van egy TestController-en belül egy GetTime, akkor http://localhost:0000/Test/Time
-          A megadott paraméterek a függvények paramétereiként viselkednek, de ugyanolyan típusnak kell lenniük.
-          */
+        /*
+        Észrevételek:
+        A controller classok nevei és a benne lévő függvények határozzák meg a resource-ok path-jeit.
+        A függvények HTTPRequest típus támogatását attribútumokkal lehet megadni. (HttpGet, stb.)
+
+        GET: Adatot kér
+        POST: Adatot rak
+        PUT: Adatot cserél (Mindegyiket a route-on)
+        DELETE: Adatot töröl
+        PATCH: Adatot módosít
+
+        Például ha van egy TestController-en belül egy GetTime, akkor http://localhost:0000/Test/Time
+        A megadott paraméterek a függvények paramétereiként viselkednek, de ugyanolyan típusnak kell lenniük.
+        
+        SQL-ben a Leave Order 1000-ként lépeget
+        SQL-ben a User_Leave.IsConfirmed a Username aki engedélyezte, NULL, ha nem lett engedélyezve
+        */
 
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
@@ -42,7 +54,7 @@ namespace LeaveAPI
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
