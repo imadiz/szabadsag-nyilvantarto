@@ -39,6 +39,8 @@
                FontSize="20"
                Grid.Row="0"/>
           <TextBox x:Name="txt_user"
+                   Text="{Binding Model.Username,
+                          Mode=TwoWay}"
                    BorderBrush="{Binding Model.UsernameBoxBorderColor}"
                    FontSize="15"
                    Margin="0 0 0 15"
@@ -47,6 +49,8 @@
                  FontSize="20"
                  Grid.Row="2"/>
           <TextBox x:Name="txt_pwd"
+                   Text="{Binding Model.Password,
+                          Mode=TwoWay}"
                    BorderBrush="{Binding Model.PasswordBoxBorderColor}"
                    FontSize="15"
                    PasswordChar="*"
@@ -60,10 +64,20 @@
                   BorderBrush="#adadad"
                   CornerRadius="10"
                   HorizontalAlignment="Center"
-                  Click="Button_Click"/>
+                  Command="{Binding Command_AttemptLogin}"
+                  IsEnabled="True"/>
           <Label x:Name="lbl_errorchip"
+                 Content="{Binding Model.ErrorChipText}"
                  Grid.Row="5"
-                 IsVisible="False"/>
+                 IsVisible="{Binding Model.ErrorChipIsVisible}"
+                 Background="#77ff0000"
+                 BorderBrush="#ff0000"
+                 CornerRadius="10"
+                 FontSize="15"
+                 Margin="15"
+                 Padding="5"
+                 HorizontalAlignment="Center"
+                 HorizontalContentAlignment="Center"/>
         </Grid>
       </Grid>
     </Border>

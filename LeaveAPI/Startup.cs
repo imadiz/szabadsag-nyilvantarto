@@ -15,6 +15,7 @@ using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using System;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace LeaveAPI
 {
@@ -38,18 +39,18 @@ namespace LeaveAPI
         SQL-ben a User_Leave.IsConfirmed a Username aki engedélyezte, NULL, ha nem lett engedélyezve
         */
 
+        public JObject TechUserLoginData { get; set; } = new JObject()
+        {
+            { "techusername", "LeaveClient" },
+            { "techpassword", "Jb4p&$DqL9TwVBrW5TUjay284iJsA^^a" }
+        };//Client azonosító adatok
+
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
-        public SqlConnection GetSqlConnString()//SQLConnectionString
-        {
-            return new SqlConnection($@"Server={Environment.MachineName}\SQLEXPRESS;" +
-                                       "Trusted_Connection=True;" +
-                                       "Database=Szabadsagnyilvantarto;" +
-                                       "Connection timeout=10;" +
-                                       "Integrated Security=SSPI;");
-        }
         public void Configuration(IAppBuilder appBuilder)
         {
+            appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
@@ -70,24 +71,15 @@ namespace LeaveAPI
             //Basic authentication
             appBuilder.UseBasicAuthentication(new BasicAuthenticationOptions("SecureAPI", async (username, password) => Authenticate (username, password)));
             appBuilder.UseWebApi(config);
+
         }
 
         private IEnumerable<Claim> Authenticate (string username, string password)
         {
-            using (SqlConnection MyConn = GetSqlConnString())
-            {
-                SqlCommand GetUser = new SqlCommand($"SELECT * FROM Users WHERE username = '{username}' AND password = '{password.GetHashCode()}'", MyConn);//User megkeresése
-                MyConn.Open();//Connection megnyitása
-                SqlDataReader reader = GetUser.ExecuteReader();//Reader elindítása
-                bool FoundUser = reader.HasRows;//Van-e találat
-
-                reader.Close();//Reader bezárás
-
-                if (FoundUser)//Találat alapján beengedés
-                    return new List<Claim>() { new Claim(ClaimTypes.NameIdentifier, username) };
-                else
-                    return null;
-            }                
+            if (username.Equals(TechUserLoginData["techusername"].Value<string>()) && password.Equals(TechUserLoginData["techpassword"].Value<string>()))
+                return new List<Claim> { new Claim(username, password) };
+            else
+                return null;
         }
         public class ScopeAuthorizeAttribute : AuthorizeAttribute
         {

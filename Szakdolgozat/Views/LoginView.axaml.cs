@@ -12,9 +12,4 @@ public partial class LoginView : UserControl
     {
         InitializeComponent();
     }
-
-    private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        MessageBus.Current.SendMessage("", "ChangeView");
-    }
 }

@@ -13,15 +13,13 @@ namespace LeaveAPI
     [Authorize]
     public class PrivateController : ApiController
     {
-        [HttpGet]
-        public JObject Test()
-        {
-            return new JObject()
-            {
-                { "CallName", MethodBase.GetCurrentMethod().Name },
-                { "Value", "Hello!" }
-            };
-        }
+        [HttpBindNever]
+        public SqlConnection DBConn { get; } = new SqlConnection($@"Server={Environment.MachineName}\SQLEXPRESS;" +
+                                       "Trusted_Connection=True;" +
+                                       "Database=Szabadsagnyilvantarto;" +
+                                       "Connection timeout=10;" +
+                                       "Integrated Security=SSPI;");//SQLConnectionString
+
         [HttpGet]
         public JObject CurrentTime/*A függvény neve a /-jel után jön, utána ha van, ?paraméter1=érték1&paraméter2=érték2, stb.*/()
         {
@@ -32,8 +30,13 @@ namespace LeaveAPI
             };
         }
         [HttpPost]
-        public JObject UserLogin([FromBody]string username, [FromBody]string password)
+        public JObject UserLogin([FromBody]JObject LoginData)
         {
+            Console.WriteLine($"{MethodBase.GetCurrentMethod().Name} request érkezett.");
+            
+            string username = LoginData["username"].Value<string>();
+            string password = LoginData["password"].Value<string>();
+
             using (SqlConnection MyConn = new SqlConnection($@"Server={Environment.MachineName}\SQLEXPRESS;" +
                                                               "Trusted_Connection=True;" +
                                                               "Database=Szabadsagnyilvantarto;" +
@@ -43,36 +46,30 @@ namespace LeaveAPI
                 SqlCommand GetUser = new SqlCommand($"SELECT * FROM Users WHERE username = '{username}'", MyConn);//Username megkeresése
                 MyConn.Open();//Connection megnyitása
                 SqlDataReader reader = GetUser.ExecuteReader();//Reader elindítása
+
+                JObject response = new JObject()
+                {
+                    { "CallName", MethodBase.GetCurrentMethod().Name }
+                };//Válasz előkészítése
+
                 if (reader.HasRows)//Ha van ilyen username a DB-ben
                 {//Van user
                     reader.Close();//Reader bezár
-                    GetUser = new SqlCommand($"SELECT password FROM Users WHERE username = '{username}' AND password = '{password.GetHashCode()}'", MyConn);//Username+Password kombó keresése
+                    GetUser = new SqlCommand($"SELECT password FROM Users WHERE username = '{username}' AND password = '{password}'", MyConn);//Username+Password kombó keresése
                     reader = GetUser.ExecuteReader();
 
                     bool FoundLoginData = reader.HasRows;//Találat
                     reader.Close();//Reader bezárás
 
                     if (FoundLoginData)//Ha jó a login kombó
-                        return new JObject()//Bejelentkezés
-                        {
-                            { "CallName", "Login" },
-                            { "Value", "Success" }
-                        };
+                        response.Add("LoginAttempt", "Success");//Bejelentkezés
                     else
-                        return new JObject()//Rossz jelszó
-                        {
-                            { "CallName", "Login" },
-                            { "Value", "Wrong password" }
-                        };
+                        response.Add("LoginAttempt", "Bad password");//Rossz jelszó
                 }
                 else
-                {//Nincs user
-                    return new JObject()
-                    {
-                        { "CallName", "Login"},
-                        { "Value", "User not found" }
-                    };
-                }
+                    response.Add("LoginAttempt", "User not found");//Nincs user
+                Console.WriteLine($"Válasz:\n{response}");
+                return response;
             }
         }
     }

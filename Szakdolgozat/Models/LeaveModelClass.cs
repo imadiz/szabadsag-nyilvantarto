@@ -48,7 +48,7 @@ namespace Szakdolgozat
             {
                 try
                 {
-                    DebugText = SendAPICall("public/CurrentTime").Result["Value"].Value<string>();
+                    DebugText = SendGetAPICall("public/CurrentTime").Result["Value"].Value<string>();
                 }
                 catch (HttpRequestException re_ex)//Ha nem sikerül lekérni az időt
                 {
@@ -90,19 +90,29 @@ namespace Szakdolgozat
             }
         }
 
-        public async Task<JObject> SendAPICall(string CallName)
+        public async Task<JObject> SendGetAPICall(string CallName)
         {
             HttpClient client = new();
 
-            byte[] authdata = new UTF8Encoding().GetBytes("a:a");/*Tech. Felhasználónév:Jelszó*/
+            byte[] authdata = new UTF8Encoding().GetBytes("LeaveClient:Jb4p&$DqL9TwVBrW5TUjay284iJsA^^a");/*Tech. Felhasználónév:Jelszó*/
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));//Auth adatok request-hez adása
 
-            //TODO: paraméterezni: http://localhost:9000/api/
             HttpResponseMessage response = await client.GetAsync($"http://localhost:9000/api/{CallName}");//Call elküldése
 
             return JObject.Parse(await response.Content.ReadAsStringAsync());
         }
-        
+        public async Task<JObject> SendPostAPICall(string CallName, JObject CallContent)
+        {
+            HttpClient client = new();
+
+            byte[] authdata = new UTF8Encoding().GetBytes("LeaveClient:Jb4p&$DqL9TwVBrW5TUjay284iJsA^^a");/*Tech. Felhasználónév:Jelszó*/
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authdata));//Auth adatok request-hez adása
+
+            HttpResponseMessage response = await client.PostAsync($"http://localhost:9000/api/{CallName}", new StringContent(CallContent.ToString()));//Call elküldése
+
+            return JObject.Parse(await response.Content.ReadAsStringAsync());
+        }
+
         public LeaveModelClass()
         {
             CreateCalendarDisplay();
