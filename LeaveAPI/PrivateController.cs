@@ -23,11 +23,16 @@ namespace LeaveAPI
         [HttpGet]
         public JObject CurrentTime/*A függvény neve a /-jel után jön, utána ha van, ?paraméter1=érték1&paraméter2=érték2, stb.*/()
         {
-            return new JObject
+            Console.WriteLine($"{MethodBase.GetCurrentMethod().Name} request érkezett.");
+
+            JObject response = new JObject
             {
                 { "CallName", MethodBase.GetCurrentMethod().Name },
-                { "Value", DateTimeOffset.Now }
+                { "Time", DateTimeOffset.Now }
             };
+
+            Console.WriteLine($"Válasz:\n{response}\n");
+            return response;
         }
         [HttpPost]
         public JObject UserLogin([FromBody]JObject LoginData)
@@ -68,7 +73,7 @@ namespace LeaveAPI
                 }
                 else
                     response.Add("LoginAttempt", "User not found");//Nincs user
-                Console.WriteLine($"Válasz:\n{response}");
+                Console.WriteLine($"Válasz:\n{response}\n");
                 return response;
             }
         }

@@ -1,4 +1,4 @@
-﻿{
+{
   "profiles": {
     "Szakdolgozat.Browser": {
       "commandName": "Project",
@@ -8,6 +8,16 @@
       },
       "applicationUrl": "https://localhost:9002;http://localhost:9001",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/debug?browser={browserInspectUri}"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:9002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:9002;http://localhost:9001"
+      },
+      "distributionName": ""
     }
   }
 }
